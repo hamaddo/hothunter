@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rgr", "Rgr\Rgr.csproj", "{EC8F8ECE-3514-405E-9D02-B2D0814B5EA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rgr.Data", "Rgr.Data\Rgr.Data.csproj", "{172AE045-6449-4115-B46A-F6B09A40C7D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC8F8ECE-3514-405E-9D02-B2D0814B5EA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC8F8ECE-3514-405E-9D02-B2D0814B5EA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC8F8ECE-3514-405E-9D02-B2D0814B5EA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC8F8ECE-3514-405E-9D02-B2D0814B5EA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{172AE045-6449-4115-B46A-F6B09A40C7D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{172AE045-6449-4115-B46A-F6B09A40C7D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{172AE045-6449-4115-B46A-F6B09A40C7D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{172AE045-6449-4115-B46A-F6B09A40C7D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
