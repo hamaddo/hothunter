@@ -10,7 +10,7 @@ using Rgr.Data;
 
 namespace Rgr.Migrations
 {
-    [DbContext(typeof(ClientDataContext))]
+    [DbContext(typeof(DataContext))]
     [Migration("20221224152158_InitialCreate")]
     partial class InitialCreate
     {

@@ -9,7 +9,7 @@ using Rgr.Data;
 
 namespace Rgr.Migrations
 {
-    [DbContext(typeof(ClientDataContext))]
+    [DbContext(typeof(DataContext))]
     partial class ClientDataContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

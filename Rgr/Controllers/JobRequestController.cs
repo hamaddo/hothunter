@@ -8,9 +8,9 @@ namespace Rgr.Controllers;
 [Route("[controller]")]
 public class RequestController : Controller
 {
-    private readonly ClientDataContext _ctx;
+    private readonly DataContext _ctx;
 
-    public RequestController(ClientDataContext ctx)
+    public RequestController(DataContext ctx)
     {
         _ctx = ctx;
     }

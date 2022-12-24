@@ -2,9 +2,9 @@
 
 namespace Rgr.Data;
 
-public class ClientDataContext: DbContext
+public class DataContext: DbContext
 {
-    public ClientDataContext(DbContextOptions<ClientDataContext> options) : base(options)
+    public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
     }
 
