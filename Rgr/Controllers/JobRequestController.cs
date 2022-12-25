@@ -5,7 +5,7 @@ using Rgr.Data;
 namespace Rgr.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/request")]
 public class RequestController : Controller
 {
     private readonly DataContext _ctx;
@@ -16,7 +16,7 @@ public class RequestController : Controller
     }
 
 
-    [HttpGet("/client/{id}")]
+    [HttpGet("client/{id}")]
     public async Task<ActionResult<List<JobRequest>>> Get(string id)
     {
         var client = await _ctx.Clients.Include(i => i.ClientsRequests).FirstOrDefaultAsync(i => i.Id == id);
@@ -25,8 +25,8 @@ public class RequestController : Controller
         return Ok(client.ClientsRequests);
     }
 
-    [HttpPost("/client/{id}")]
-    public async Task<ActionResult<List<JobRequest>>> AddClient(string id, CreateJobRequestDto jobRequest)
+    [HttpPost("client/{id}")]
+    public async Task<ActionResult<List<JobRequest>>> AddClient(string id, ModifyJobRequestDto jobRequest)
     {
         var dbClient = await _ctx.Clients.Include(i => i.ClientsRequests).FirstOrDefaultAsync(i => i.Id == id);
         if (dbClient == null)
@@ -44,20 +44,15 @@ public class RequestController : Controller
         return Ok(result?.ClientsRequests);
     }
 
-    [HttpPut]
-    public async Task<ActionResult<List<Client>>> UpdateClient(Client request)
+    [HttpPut("{id}")]
+    public async Task<ActionResult<JobRequest>> UpdateClient(string id, JobRequest request)
     {
-        var dbClient = await _ctx.Clients.FindAsync(request.Id);
-        if (dbClient == null)
-            return BadRequest("Client not found");
+        var dbJobRequest = await _ctx.JobRequests.FindAsync(request.Id);
+        if (dbJobRequest == null)
+            return BadRequest("Job request not found");
 
-        dbClient.Name = request.Name;
-        dbClient.MiddleName = request.MiddleName;
-        dbClient.Surname = request.Surname;
-        dbClient.Address = request.Address;
-        dbClient.Gender = request.Gender;
-        dbClient.ReceiptNumber = request.ReceiptNumber;
-        dbClient.RegistryNumber = request.RegistryNumber;
+        dbJobRequest.PositionName = request.PositionName;
+        dbJobRequest.Salary = request.Salary;
 
         await _ctx.SaveChangesAsync();
 
@@ -65,13 +60,13 @@ public class RequestController : Controller
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<List<Client>>> Delete(int id)
+    public async Task<ActionResult<Client>> Delete(int id)
     {
-        var dbClient = await _ctx.Clients.FindAsync(id);
+        var dbClient = await _ctx.JobRequests.FindAsync(id);
         if (dbClient == null)
             return BadRequest("Client no found");
 
-        _ctx.Clients.Remove(dbClient);
+        _ctx.JobRequests.Remove(dbClient);
         await _ctx.SaveChangesAsync();
 
         return Ok(await _ctx.Clients.ToArrayAsync());

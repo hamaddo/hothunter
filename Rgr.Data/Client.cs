@@ -17,7 +17,7 @@ namespace Rgr.Data
         public List<JobRequest> ClientsRequests { get; set; } = new List<JobRequest>();
     }
     
-    public class CreateClientDto
+    public class ModifyClientDto
     {
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -37,7 +37,7 @@ namespace Rgr.Data
         public int Salary { get; set; }
     }
     
-    public class CreateJobRequestDto
+    public class ModifyJobRequestDto
     {
         [Required] public string PositionName { get; set; }
 

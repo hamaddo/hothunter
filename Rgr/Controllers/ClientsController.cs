@@ -31,7 +31,7 @@ public class ClientsController: Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult<List<Client>>> AddClient(CreateClientDto client)
+    public async Task<ActionResult<List<Client>>> AddClient(ModifyClientDto client)
     {
         var newClient = new Client()
         {
@@ -48,13 +48,13 @@ public class ClientsController: Controller
         _ctx.Clients.Add(newClient);
         await _ctx.SaveChangesAsync();
 
-        return Ok(await _ctx.Clients.ToArrayAsync());
+        return Ok(newClient);
     }
 
-    [HttpPut]
-    public async Task<ActionResult<List<Client>>> UpdateClient(Client request)
+    [HttpPut("{id}")]
+    public async Task<ActionResult<List<Client>>> UpdateClient(string id , ModifyClientDto request)
     {
-        var dbClient = await _ctx.Clients.FindAsync(request.Id);
+        var dbClient = await _ctx.Clients.FindAsync(id);
         if (dbClient == null)
             return BadRequest("Client not found");
 
@@ -68,7 +68,7 @@ public class ClientsController: Controller
 
         await _ctx.SaveChangesAsync();
 
-        return Ok(await _ctx.Clients.ToListAsync());
+        return Ok(dbClient);
     }
 
     [HttpDelete("delete/{id}")]
@@ -81,6 +81,6 @@ public class ClientsController: Controller
         _ctx.Clients.Remove(dbClient);
         await _ctx.SaveChangesAsync();
 
-        return Ok(await _ctx.Clients.ToArrayAsync());
+        return Ok();
     }
 }
