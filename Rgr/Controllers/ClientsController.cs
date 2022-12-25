@@ -5,7 +5,7 @@ using Rgr.Data;
 namespace Rgr.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("clients")]
 public class ClientsController: Controller
 {
     private readonly DataContext _ctx;
@@ -22,7 +22,7 @@ public class ClientsController: Controller
         return Ok(await _ctx.Clients.Include(c=> c.ClientsRequests).ToListAsync());
     }
     [HttpGet("{id}")]
-    public async Task<ActionResult<List<Client>>> Get(string id)
+    public async Task<ActionResult<Client>> Get(string id)
     {
         var client = await _ctx.Clients.Include(i => i.ClientsRequests).FirstOrDefaultAsync(i => i.Id == id);
         if (client == null)
@@ -74,7 +74,7 @@ public class ClientsController: Controller
     [HttpDelete("delete/{id}")]
     public async Task<ActionResult<List<Client>>> Delete(string id)
     {
-        var dbClient = await _ctx.Clients.FindAsync(id);
+        var dbClient = await _ctx.Clients.Include(c=> c.ClientsRequests).FirstOrDefaultAsync(i=> i.Id == id);
         if (dbClient == null)
             return BadRequest("Client no found");
 

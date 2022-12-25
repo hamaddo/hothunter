@@ -5,12 +5,12 @@ using Rgr.Data;
 namespace Rgr.Controllers;
 
 [ApiController]
-[Route("api/request")]
-public class RequestController : Controller
+[Route("job-request")]
+public class JobRequestController : Controller
 {
     private readonly DataContext _ctx;
 
-    public RequestController(DataContext ctx)
+    public JobRequestController(DataContext ctx)
     {
         _ctx = ctx;
     }
@@ -32,20 +32,22 @@ public class RequestController : Controller
         if (dbClient == null)
             return BadRequest("Client not found");
 
-        dbClient.ClientsRequests.Add(new JobRequest()
+        var newJobRequest = new JobRequest()
         {
             Id = Guid.NewGuid().ToString(),
             PositionName = jobRequest.PositionName,
             Salary = jobRequest.Salary
-        });
+        };
+
+        dbClient.ClientsRequests.Add(newJobRequest);
         await _ctx.SaveChangesAsync();
 
         var result = await _ctx.Clients.Include(c => c.ClientsRequests).FirstOrDefaultAsync(i => i.Id == id);
-        return Ok(result?.ClientsRequests);
+        return Ok(newJobRequest);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<JobRequest>> UpdateClient(string id, JobRequest request)
+    public async Task<ActionResult<JobRequest>> UpdateJobRequest(string id, JobRequest request)
     {
         var dbJobRequest = await _ctx.JobRequests.FindAsync(request.Id);
         if (dbJobRequest == null)
@@ -56,11 +58,11 @@ public class RequestController : Controller
 
         await _ctx.SaveChangesAsync();
 
-        return Ok(await _ctx.Clients.ToListAsync());
+        return Ok(dbJobRequest);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Client>> Delete(int id)
+    public async Task<ActionResult<Client>> Delete(string id)
     {
         var dbClient = await _ctx.JobRequests.FindAsync(id);
         if (dbClient == null)
@@ -69,6 +71,6 @@ public class RequestController : Controller
         _ctx.JobRequests.Remove(dbClient);
         await _ctx.SaveChangesAsync();
 
-        return Ok(await _ctx.Clients.ToArrayAsync());
+        return Ok();
     }
 }
