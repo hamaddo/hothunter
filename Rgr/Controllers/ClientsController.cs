@@ -31,7 +31,7 @@ public class ClientsController: Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult<List<Client>>> AddClient(ModifyClientDto client)
+    public async Task<ActionResult<Client>> AddClient(ModifyClientDto client)
     {
         var newClient = new Client()
         {
@@ -52,7 +52,7 @@ public class ClientsController: Controller
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<List<Client>>> UpdateClient(string id , ModifyClientDto request)
+    public async Task<ActionResult<Client>> UpdateClient(string id , ModifyClientDto request)
     {
         var dbClient = await _ctx.Clients.FindAsync(id);
         if (dbClient == null)

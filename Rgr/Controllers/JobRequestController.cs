@@ -42,14 +42,13 @@ public class JobRequestController : Controller
         dbClient.ClientsRequests.Add(newJobRequest);
         await _ctx.SaveChangesAsync();
 
-        var result = await _ctx.Clients.Include(c => c.ClientsRequests).FirstOrDefaultAsync(i => i.Id == id);
         return Ok(newJobRequest);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<JobRequest>> UpdateJobRequest(string id, JobRequest request)
+    public async Task<ActionResult<JobRequest>> UpdateJobRequest(string id, ModifyJobRequestDto request)
     {
-        var dbJobRequest = await _ctx.JobRequests.FindAsync(request.Id);
+        var dbJobRequest = await _ctx.JobRequests.FindAsync(id);
         if (dbJobRequest == null)
             return BadRequest("Job request not found");
 
@@ -62,13 +61,13 @@ public class JobRequestController : Controller
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Client>> Delete(string id)
+    public async Task<ActionResult<JobRequest>> Delete(string id)
     {
-        var dbClient = await _ctx.JobRequests.FindAsync(id);
-        if (dbClient == null)
-            return BadRequest("Client no found");
+        var dbJobRequest = await _ctx.JobRequests.FindAsync(id);
+        if (dbJobRequest == null)
+            return BadRequest("Job request not found");
 
-        _ctx.JobRequests.Remove(dbClient);
+        _ctx.JobRequests.Remove(dbJobRequest);
         await _ctx.SaveChangesAsync();
 
         return Ok();
