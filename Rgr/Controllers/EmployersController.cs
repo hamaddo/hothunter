@@ -74,6 +74,12 @@ public class EmployersController : Controller
         if (dbEmployer == null)
             return BadRequest("Client no found");
 
+        
+        foreach (var offer in dbEmployer.EmployerOffers)
+        {
+            _ctx.Offers.Remove(offer);
+        }
+        
         _ctx.Employers.Remove(dbEmployer);
         await _ctx.SaveChangesAsync();
 

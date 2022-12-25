@@ -78,6 +78,11 @@ public class ClientsController: Controller
         if (dbClient == null)
             return BadRequest("Client no found");
 
+        foreach (var jobRequest in dbClient.ClientsRequests)
+        {
+            _ctx.JobRequests.Remove(jobRequest);
+        }
+
         _ctx.Clients.Remove(dbClient);
         await _ctx.SaveChangesAsync();
 
