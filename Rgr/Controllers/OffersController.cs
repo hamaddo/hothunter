@@ -47,15 +47,15 @@ public class OffersController : Controller
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Offer>> UpdateJobRequest(string id, ModifyOfferDto request)
+    public async Task<ActionResult<Offer>> UpdateOffer(string id, ModifyOfferDto modifyOfferDto)
     {
         var dbOffer = await _ctx.Offers.FindAsync(id);
         if (dbOffer == null)
-            return BadRequest("Job request not found");
+            return BadRequest("Offer not found");
 
-        dbOffer.PositionName = request.PositionName;
-        dbOffer.Salary = request.Salary;
-        dbOffer.Gender = request.Gender;
+        dbOffer.PositionName = modifyOfferDto.PositionName;
+        dbOffer.Salary = modifyOfferDto.Salary;
+        dbOffer.Gender = modifyOfferDto.Gender;
 
         await _ctx.SaveChangesAsync();
 
